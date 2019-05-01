@@ -1,10 +1,19 @@
-#from flaskr.migrate import User, Candidate
-from os import path
-from datetime import datetime
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flaskr.extensions import depot
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager
+from six import text_type
+from models import User, Candidate
+from datetime import datetime
 
-db = SQLAlchemy()
+app = Flask(__name__)
+app.config.from_pyfile('config.py', silent=False)
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+manager = Manager(app)
+
+manager.add_command('db', MigrateCommand)
 
 class User(db.Model):
     id = db.Column(db.Unicode, primary_key=True)
@@ -44,14 +53,8 @@ class Candidate(db.Model):
     cv_fileid = db.Column(db.Unicode, unique=True, nullable=False)
     created_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    @property
-    def cv_fileurl(self):
-        return "depot/default/" + self.cv_fileid
+if __name__ == '__main__':
+    manager.run()
 
-    @property
-    def table_filename(self):
-        file_name = depot.get(self.cv_fileid).filename
-        name, ext = path.splitext(file_name)
-        if len(name) > 15:
-            name = name[:15]
-        return name + ext;
+
+

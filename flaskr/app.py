@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flaskr.extensions import db, login_manager
-from flaskr.index import bp
+from flaskr.models import User
+from flaskr.blueprints import index, admin
 
 #application factory
 def create_app(test_config=None):
@@ -14,8 +15,12 @@ def create_app(test_config=None):
 
 def register_extensions(app):
     """Register Flask extensions."""
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.filter_by(id=user_id).first()
     login_manager.init_app(app)
     db.init_app(app)
 
 def register_blueprints(app):
-    app.register_blueprint(bp)
+    app.register_blueprint(index.bp)
+    app.register_blueprint(admin.bp)

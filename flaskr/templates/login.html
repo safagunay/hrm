@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block stylee %}
+  <style>
+    .topMargin {
+      margin-top: 30px
+    }
+  </style>
+{% endblock %}
+{% block content %}
+<form method="post" action="/login" class="topMargin" id="loginForm">
+  <div class="form-group">
+      <label for="first_name">Username:</label>
+      <input type="text" name="username" class="form-control" id="username">
+  </div>
+  <div class="form-group">
+      <label for="last_name">Password:</label>
+      <input type="password" name="password" class="form-control" id="password">
+  </div>
+  {% for message in get_flashed_messages() %}
+    <div class="danger">{{ message }}</div>
+  {% endfor %}
+  <button id="loginBtn" type="submit" class="btn btn-primary">Login</button>
+</form> 
+{% endblock %}
+

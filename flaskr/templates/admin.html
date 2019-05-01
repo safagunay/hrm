@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block stylee %}
+  <style>
+    .top-margin {
+      margin-top: 30px
+    }
+    thead {
+      color : darkorange;
+      text-decoration: underline;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+{% for message in get_flashed_messages() %}
+    <div class="danger">{{ message }}</div>
+{% endfor %}
+<table class="table table-dark top-margin">
+    <thead>
+        <th scope="col"><b>Created</b></th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Cv File</th>
+    </thead>
+    <tbody>
+        {% for candidate in candidates %}
+            <tr>
+                <td >{{candidate.created_on.date()}}</td>
+                <td>{{candidate.first_name}}</td>
+                <td>{{candidate.last_name}}</td>
+                <td>{{candidate.email}}</td>
+                <td><form method="get" action="/admin/file">
+                      <input type="hidden" name="fileid" value="{{candidate.cv_fileid}}">
+                      <button type="submit" class="btn btn-primary">DOWNLOAD</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
