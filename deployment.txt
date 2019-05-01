@@ -8,17 +8,17 @@ Create a virtualenv in the project's root directory:
     virtualenv venv
 
 Activate the virtualenv:
-    source venv/Scripts/Activate
+    source venv/Scripts/activate
 
 Install requirements:
     pip install -r requirements.txt
 
 Build PostgreSQL image from the "Dockerfile":
     cd flaskr/scripts
-    sudo docker build -t postgresondocker:9.3
+    sudo docker build -t postgresondocker:9.3 .
 
 Run Container and initialize db:
-    ./run_db.sh (admin-password) (fake-data-count)
+    ./run_db.sh [admin-password]
 
 Run application:
     cd ../..
