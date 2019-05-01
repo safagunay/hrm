@@ -5,15 +5,11 @@ from werkzeug.security import generate_password_hash
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import SQLALCHEMY_DATABASE_URI
-from models import User
+from migrate import User
 
 if __name__ == '__main__':
     app = Flask(__name__)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI,
-        SQLALCHEMY_TRACK_MODIFICATIONS = False
-    )
+    app.config.from_pyfile('config.py', silent=False)
 
     db = SQLAlchemy(app)
     
@@ -21,10 +17,10 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         password = sys.argv[1]
     admin = User(
-        id="adana",
+        id=str(uuid.uuid1()),
         username='admin', 
         password=generate_password_hash(password)
     )
     db.session.add(admin)
     db.session.commit()
-    print("Admin user is added to database.")
+    print("Admin user(password:%s) is added to database." % (password))

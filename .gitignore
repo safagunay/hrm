@@ -1,6 +1,5 @@
 venv/
 files/
-tests/testfiles
 *.pyc
 __pycache__/
 

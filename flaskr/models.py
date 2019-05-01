@@ -41,7 +41,7 @@ class Candidate(db.Model):
     first_name = db.Column(db.String(80), unique=False, nullable=False)
     last_name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    cv_fileid = db.Column(db.Unicode, unique=True, nullable=False)
+    cv_fileid = db.Column(db.Unicode, unique=False, nullable=False)
     created_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     @property

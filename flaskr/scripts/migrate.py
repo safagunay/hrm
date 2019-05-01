@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from six import text_type
-from models import User, Candidate
 from datetime import datetime
 
 app = Flask(__name__)
@@ -50,7 +49,7 @@ class Candidate(db.Model):
     first_name = db.Column(db.String(80), unique=False, nullable=False)
     last_name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    cv_fileid = db.Column(db.Unicode, unique=True, nullable=False)
+    cv_fileid = db.Column(db.Unicode, unique=False, nullable=False)
     created_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 if __name__ == '__main__':

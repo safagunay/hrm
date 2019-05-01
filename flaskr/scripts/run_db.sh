@@ -8,23 +8,25 @@ stop_and_rm_if_exists() {
 }
 
 run_postgres() {
-  docker run -d --name postgres -e POSTGRES_PASSWORD=zopsedu  -e POSTGRES_USER=zopsedu -e POSTGRES_DB=zopsedu -p 5432:5432 postgres
+  docker run -d --name postgres -p 5432:5432 postgresondocker:9.3
 }
 
 upgrade_and_migrate() {
-  python ../models.py db upgrade
+  python migrate.py db init
+  python migrate.py db migrate
+  python migrate.py db upgrade
 }
 
 insert_data() {
-  python fake_data.py all 10
-  python manage.py insert_data
-
+  python insert_admin_data.py $1
+  python insert_fake_data.py $2
 }
 
 main() {
   stop_and_rm_if_exists
   sleep 2
-  run_postgres; sleep 3 &&  upgrade_and_migrate;
+  run_postgres; sleep 3 &&  upgrade_and_migrate
+  insert_data
 }
 
 main

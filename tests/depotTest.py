@@ -6,6 +6,6 @@ DepotManager.configure('default', {
 print(DepotManager.get_default())
 print(DepotManager.get())
 depot = DepotManager.get()
-fileid = depot.create(open('./testfiles/cv_safagunay.pdf','br'))
+fileid = depot.create(open('./testfiles/fake.txt','br'))
 stored_file = depot.get(fileid)
 print(stored_file.content_type)

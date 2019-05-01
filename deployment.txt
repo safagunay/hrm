@@ -1,0 +1,29 @@
+Check to see your python installation has the pip:
+    pip -h
+
+if you don't installed yet, install virtualenv:
+    pip install virtualenv 
+
+Create a virtualenv in the project's root directory:
+    virtualenv venv
+
+Activate the virtualenv:
+    source venv/Scripts/Activate
+
+Install requirements:
+    pip install -r requirements.txt
+
+Build PostgreSQL image from the "Dockerfile":
+    cd flaskr/scripts
+    sudo docker build -t postgresondocker:9.3
+
+Run Container and initialize db:
+    ./run_db.sh (admin-password) (fake-data-count)
+
+Run application:
+    cd ../..
+    export FLASK_APP=./autoapp.py
+    export FLASK_ENV=development
+    flask run
+
+    
